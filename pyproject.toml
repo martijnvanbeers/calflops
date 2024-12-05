@@ -1,0 +1,28 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "calflops"
+version = "0.3.2"
+authors = [
+  { name="MrYXJ", email="yxj2017@gmail.com"},
+]
+description = "This package is designed to compute the theoretical amount of FLOPs(floating-point operations)、MACs(multiply-add operations) and Parameters in all various neural networks, such as Linear、 CNN、 RNN、 GCN、Transformer(Bert、LlaMA etc Large Language Model)，including any custom models via torch.nn.function.* as long as based on the Pytorch implementation."
+
+readme = "README.md"
+license = { file="LICENSE" }
+requires-python = ">=3.6"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "torch>=1.1.0",
+    "accelerate>=0.22.0",
+    "huggingface_hub>=0.16.4"
+]
+
+[project.urls]
+"Homepage" = "https://github.com/MrYxJ/calculate-flops.pytorch"
