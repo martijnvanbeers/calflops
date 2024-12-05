@@ -30,6 +30,7 @@ def calculate_flops(model,
                     forward_mode="forward",
                     include_backPropagation=False,
                     compute_bp_factor=2.0,
+                    extra_apply_funcs=[],
                     print_results=True,
                     print_detailed=True,
                     output_as_string=True,
@@ -48,6 +49,7 @@ def calculate_flops(model,
         forward_mode (str, optional): To determine the mode of model inference, Default to 'forward'. And use 'generate' if model inference uses model.generate().
         include_backPropagation (bool, optional): Decides whether the final return FLOPs computation includes the computation for backpropagation.
         compute_bp_factor (float, optional): The model backpropagation is a multiple of the forward propagation computation. Default to 2.
+        extra_apply_funcs (bool, optional): A list of functions to use in model.apply() which will be run before print_results. Defaults to the empty list.
         print_results (bool, optional): Whether to print the model profile. Defaults to True.
         print_detailed (bool, optional): Whether to print the detailed model profile. Defaults to True.
         output_as_string (bool, optional): Whether to print the output as string. Defaults to True.
@@ -171,6 +173,10 @@ def calculate_flops(model,
     flops = calculate_flops_pipline.get_total_flops()
     macs = calculate_flops_pipline.get_total_macs()
     params = calculate_flops_pipline.get_total_params()
+
+    if len(extra_apply_funcs) > 0:
+        for func in extra_apply_funcs:
+            model.apply(func)
 
     if print_results:
         return_print = calculate_flops_pipline.print_model_pipline(units=output_unit,
